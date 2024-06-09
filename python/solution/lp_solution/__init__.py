@@ -1,12 +1,11 @@
 """A solution to the license plate game."""
 
 import logging
-
-from logging import RootLogger
 from dataclasses import dataclass
+from logging import RootLogger
 
-from lp_solution_name import SolutionName
 from lp_dictionary import Dictionary
+from lp_solution_name import SolutionName
 from lp_tests import Test
 
 LOGGER: RootLogger = logging.getLogger()
@@ -24,7 +23,15 @@ class Solution:
         for letters in test.tests:
             word: str | None = self.evaluate(letters)
             if word is None:
-                LOGGER.info("Solution %s: there is no word containing the letters %s in order.", self.name.name, letters.upper())
+                LOGGER.info(
+                    "Solution %s: there is no word containing the letters %s in order.",
+                    self.name.name,
+                    letters.upper(),
+                )
             else:
-                LOGGER.info("Solution %s: the shortest word containing the letters %s in order is %s.", self.name.name, letters.upper(), word)
-
+                LOGGER.info(
+                    "Solution %s: the shortest word containing the letters %s in order is %s.",
+                    self.name.name,
+                    letters.upper(),
+                    word,
+                )

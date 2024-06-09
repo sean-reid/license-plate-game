@@ -1,12 +1,15 @@
 """Options for code runner."""
 
 from __future__ import annotations
+
+from argparse import Namespace as ParsedArguments
 from dataclasses import dataclass
 
-from lp_solution_name import SolutionName
-from lp_log_level import LogLevel
 from lp_dictionary import Dictionary
+from lp_log_level import LogLevel
+from lp_solution_name import SolutionName
 from lp_tests import Test
+
 
 @dataclass(frozen=True)
 class Options:
@@ -23,8 +26,10 @@ class Options:
             LogLevel.DEBUG if debug else LogLevel.NONE if quiet else LogLevel.INFO
         )
         name: SolutionName = (
-            SolutionName.NAIVE if parsed_arguments.name == "naive"
-            else SolutionName.BRUTEFORCE if parsed_arguments.name == "brute_force"
+            SolutionName.NAIVE
+            if parsed_arguments.name == "naive"
+            else SolutionName.BRUTEFORCE
+            if parsed_arguments.name == "brute_force"
             else SolutionName.NAIVE
         )
         test: Test = Test(parsed_arguments.test)

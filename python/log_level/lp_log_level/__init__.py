@@ -1,6 +1,8 @@
 """Defines types for logging."""
+
 import logging
 from enum import Enum
+
 
 class LogLevel(Enum):
     DEBUG = logging.DEBUG

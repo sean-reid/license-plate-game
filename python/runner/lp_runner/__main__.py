@@ -1,4 +1,5 @@
 """Main entrypoint for code runner."""
+
 import sys
 
 from lp_runner.main import main

@@ -1,16 +1,16 @@
 """Run solutions."""
 
 import logging
-
-from logging import RootLogger
 from dataclasses import dataclass
-from datetime import datetime as DateTime, timedelta as TimeDelta
+from datetime import datetime as DateTime
+from datetime import timedelta as TimeDelta
+from logging import RootLogger
 
-from lp_solution_name import SolutionName
-from lp_dictionary import Dictionary
-from lp_tests import Test
-from lp_naive import NaiveSolution
 from lp_brute_force import BruteForceSolution
+from lp_dictionary import Dictionary
+from lp_naive import NaiveSolution
+from lp_solution_name import SolutionName
+from lp_tests import Test
 
 LOGGER: RootLogger = logging.getLogger()
 
@@ -21,9 +21,15 @@ class RunResult:
     test: Test
     dictionary: Dictionary
     elapsed_time: TimeDelta
-    
+
     def show_summary(self) -> None:
-        LOGGER.info("Solution %s ran on %s tests in %s seconds, using dictionary %s as a reference", self.name.name, self.test.test_count, self.elapsed_time.total_seconds(), self.dictionary.name)
+        LOGGER.info(
+            "Solution %s ran on %s tests in %s seconds, using dictionary %s as a reference",
+            self.name.name,
+            self.test.test_count,
+            self.elapsed_time.total_seconds(),
+            self.dictionary.name,
+        )
 
 
 @dataclass(frozen=True)
@@ -35,7 +41,9 @@ class Runner:
     def run(self) -> RunResult:
         solution: NaiveSolution | BruteForceSolution
         start_time: DateTime = DateTime.now()
-        LOGGER.debug("Starting running solution %s at time %s", self.name.name, start_time)
+        LOGGER.debug(
+            "Starting running solution %s at time %s", self.name.name, start_time
+        )
         if self.name == SolutionName.NAIVE:
             solution = NaiveSolution(name=self.name, dictionary=self.dictionary)
         elif self.name == SolutionName.BRUTEFORCE:

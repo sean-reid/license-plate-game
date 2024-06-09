@@ -7,6 +7,7 @@ from pathlib import Path
 from lp_defaults import WORD_DATA_DIR
 from lp_repo import REPO_ROOT
 
+
 @dataclass(frozen=True)
 class Dictionary:
     name: str
@@ -23,4 +24,3 @@ class Dictionary:
     @cached_property
     def word_count(self) -> int:
         return len(self.words)
-
