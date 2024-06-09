@@ -1,0 +1,9 @@
+-e ${REPO_ROOT}/python/brute_force
+-e ${REPO_ROOT}/python/defaults
+-e ${REPO_ROOT}/python/dictionary
+-e ${REPO_ROOT}/python/log_level
+-e ${REPO_ROOT}/python/naive
+-e ${REPO_ROOT}/python/repo
+-e ${REPO_ROOT}/python/solution
+-e ${REPO_ROOT}/python/solution_name
+-e ${REPO_ROOT}/python/tests

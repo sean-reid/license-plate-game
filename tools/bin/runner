@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Function to create and set up the virtual environment
+setup_venv() {
+    uv venv $REPO_ROOT/.venv
+    source ${REPO_ROOT}/.venv/bin/activate
+    uv pip install -r ${REPO_ROOT}/python/runner/requirements.txt
+    uv pip install -e ${REPO_ROOT}/python/runner
+}
+
+# Check if the virtual environment exists
+if [ ! -d "${REPO_ROOT}/.venv" ]; then
+    echo "Virtual environment not found. Creating and setting it up..."
+    setup_venv
+else
+    # Check if requirements.txt has changed or if the virtual environment needs to be updated
+    REQUIREMENTS_HASH_FILE="${REPO_ROOT}/.venv/requirements_hash"
+    NEW_REQUIREMENTS_HASH=$(md5sum ${REPO_ROOT}/python/runner/requirements.txt | awk '{ print $1 }')
+
+    if [ ! -f "$REQUIREMENTS_HASH_FILE" ]; then
+        echo "Requirements hash file not found. Setting up virtual environment..."
+        setup_venv
+        echo $NEW_REQUIREMENTS_HASH > $REQUIREMENTS_HASH_FILE
+    else
+        OLD_REQUIREMENTS_HASH=$(cat $REQUIREMENTS_HASH_FILE)
+        if [ "$NEW_REQUIREMENTS_HASH" != "$OLD_REQUIREMENTS_HASH" ]; then
+            echo "Requirements have changed. Updating virtual environment..."
+            setup_venv
+            echo $NEW_REQUIREMENTS_HASH > $REQUIREMENTS_HASH_FILE
+        else
+            echo "Virtual environment is up to date."
+            source ${REPO_ROOT}/.venv/bin/activate
+        fi
+    fi
+fi
+
+# Execute the Python module
+python -m lp_runner "$@"
+
+# Deactivate the virtual environment after execution
+deactivate
+
