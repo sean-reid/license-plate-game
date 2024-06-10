@@ -9,7 +9,6 @@ from lp_solution import Solution
 @dataclass
 class NaiveSolution(Solution):
     def __post_init__(self):
-        self.all_words: dict[str, list[str] | None] = {}
         self.shortest_words: dict[str, str | None] = {}
         self.process_words()
 
